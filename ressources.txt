@@ -1,0 +1,8 @@
+Je vais regrouper ici toutes les ressources qui m'ont permis de réaliser certains objets/images/codes
+
+
+Création des tuiles type Windows:
+http://royto.familleroy.fr/2013/09/10/css-tuile-responsive/
+
+Images:
+http://icones.pro/ (theme=> nuove)

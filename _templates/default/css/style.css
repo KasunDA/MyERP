@@ -1,0 +1,30 @@
+/***************************************
+* CODE CSS POUR LES LOGINS
+***************************************/
+.login { background-color : rgba(193,232,247,0.5); text-align: center; padding: 20px; margin-top: 100px; border-radius: 10px; border: solid 1px black; }
+.fondEcran{	font-family: Tahoma; background-image: url("../images/fondLogin.jpg"); background-attachement: fixed; background-repeat: no-repeat; }
+
+
+/***************************************
+* CODE CSS POUR LES TEXTES
+***************************************/
+.center { text-align: center; }
+.right { text-align: right; }
+.one-line {display: inline; }
+.optionsAffiche { background-color: rgb(235,235,235); padding: 10px 15px;}
+
+/***************************************
+* CODE CSS POUR LES TUILES
+***************************************/
+.tuile{ display: inline-block; list-style: none outside none; margin: 0 8px 8px 0; vertical-align: top; background-color: rgba(255,255,255,0.4);}
+.tile { -moz-box-sizing: border-box; box-sizing: border-box; background: none repeat scroll 0 0 #F0F1F4; border-bottom: 3px solid #7B4F9D; display: inline-block; height: 100px; width: 100px; text-decoration: none; vertical-align: top; }
+.tile h1 { color: #253340; display: block; font-family: "Segoe UI",Segoe,"Trebuchet MS",Tahoma,Geneva,sans-serif; font-size: 13px; font-weight: 500; line-height: 148%; margin: 0; padding: 10px; text-decoration: none; white-space: nowrap; text-overflow : ellipsis; overflow : hidden; text-align : center; }
+.tile img { left: 50%; margin: 5px 0 10px -25px; position: relative; }
+
+/***************************************
+* CODE CSS POUR LES TABLEAUX
+***************************************/
+table .td80 { width: 80px; }
+table .td100 { width: 100px; }
+table .td150 { width: 150px; }
+

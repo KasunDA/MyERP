@@ -1,0 +1,6 @@
+.buildpath
+.project
+config.xml
+.metadata/*
+.project/*
+.settings/*
