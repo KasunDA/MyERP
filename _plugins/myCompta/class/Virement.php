@@ -1,6 +1,6 @@
 <?php
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/FonctionSQL.php';
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/FonctionSQL.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/fonctions/myERP.php';
 
 // On va définir notre classe
 class Virement extends FonctionSQL
@@ -17,18 +17,14 @@ class Virement extends FonctionSQL
 
 	protected $monCompte;
 
-	protected $nomTable = "mycompta_virements";
-	protected $nomID = "idVirement";
-	
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_virements";
+		$this->nomID = "idVirement";
+		$this->suiviModification = false;
+		$this->champTriDefaut = array('libeldatele');
+		$this->ordreTriDefaut = 'ASC';
+	}	
 
-	public function __construct($idObjet = null) {
-		/* On va permettre la création de notre objet
-		 * en saisissant un ID afin de l'initialiser directement
-		 */
-		if (isset($idObjet) AND (int)$idObjet > 0) {
-			$this->getObjet($idObjet);
-		}
-	}
 
 	public function getDefinition() {
 		/* Le tableau d'en-tete sera construit de la même façon pour toutes les classes

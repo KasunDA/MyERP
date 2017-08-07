@@ -3,7 +3,7 @@
 	<aside>
 		<div id="menuAside">
 			<?php 
-			include_once $GLOBALS['root'] . '_plugins/myCompta/viewModels/widgets.php';
+			include_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/viewModels/widgets.php';
 			listeCompte(); ?>
 
 		</div>

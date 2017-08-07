@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/MyERP.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/MyERP.php';
 
 // On va définir notre classe
 class Banque extends MyERP
@@ -12,8 +12,13 @@ class Banque extends MyERP
 	protected $onArchive;
 	protected $url;
 	
-	protected $nomTable = "mycompta_banques";
-	protected $nomID = "idBanque";
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_banques";
+		$this->nomID = "idBanque";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('nomBanque');
+		$this->ordreTriDefaut = 'ASC';
+	}
 	
 	/* On va définir notre table
 	 * $typeChamp => le type de champ dans la table,

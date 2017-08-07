@@ -24,7 +24,7 @@ function listeEcheances() { ?>
 	<div class="widget">
 	<h4>Echéances des 30 prochains jours</h4>
 	<?php
-	require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/fonctions/myERP.php';
 	
 	/* On va contruire notre demande de tableau d'échéances
 	 * puis récupérer notre tableau d'échéance
@@ -77,7 +77,7 @@ function listeEcheances() { ?>
 
 function listeCompte($afficheSolde = false) { 
 	//$GLOBALS['root'] = '../../../';
-	require_once $GLOBALS['root'] . '_plugins/myCompta/scripts/myCompta.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/scripts/myCompta.php';
 	
 	// On va récupérer la liste de nos comptes
 	$listeComptes = getListeObjetCompte();
@@ -117,7 +117,7 @@ function listeCompte($afficheSolde = false) {
  
 function afficheCompte ($idCompte =  null) {
 	// On va inclure notre classe
-	require_once $GLOBALS['root'] . '_plugins/myCompta/class/Compte.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Compte.php';
 	if ($idCompte) {
 		$afficheLibelle = true;
 	}
@@ -128,7 +128,7 @@ function afficheCompte ($idCompte =  null) {
 		/* On va récupérer les paramètres du site par défaut
 		 * si aucun paramètre n'est renseigné
 		 */
-		require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/MyBDD.php';
+		require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/MyBDD.php';
 		$maConnexion = new MyBDD();
 		$maConnexion = $maConnexion->getConnexion();
 		$requete = "SELECT idCompteDefaut FROM _param";

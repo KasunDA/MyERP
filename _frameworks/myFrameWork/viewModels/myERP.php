@@ -121,16 +121,29 @@ if ($nomClasse !== '__pluginUpdate__') {
 	}
 }
 else {
-	if ($lienPlugin !== 'parametres') {
-		// On va afficher ou pas le contenu de la sidebar et ainsi adapter la taille du content
-		$tailleContent = isset($tailleContent) ? $tailleContent : null;
-		if (isset($menuGauche)) {
-			include($_SERVER['DOCUMENT_ROOT'] . $cheminPlugin . '/views/' . $menuGauche .'.php');
-			$tailleContent = 'three_quarter';
+	if ($nomClasse !== '__pluginUpdate__') {
+		if ($lienPlugin !== 'parametres') {
+			// On va afficher ou pas le contenu de la sidebar et ainsi adapter la taille du content
+			$tailleContent = isset($tailleContent) ? $tailleContent : null;
+			if (isset($menuGauche)) {
+				include($_SERVER['DOCUMENT_ROOT'] . $cheminPlugin . '/views/' . $menuGauche .'.php');
+				$tailleContent = 'three_quarter';
+			}
+			
+			$listeClasse = listeDossiers(array('dossier' => 'classe' , 'plugin' => $lienPlugin));
+			$corpsPage = $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/views/_updatePlugin';
 		}
-		
-		$listeClasse = listeDossiers(array('dossier' => 'classe' , 'plugin' => $lienPlugin));
-		$corpsPage = $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/views/_updatePlugin';
+	}
+	else {
+		// On va afficher ou pas le contenu de la sidebar et ainsi adapter la taille du content
+			$tailleContent = isset($tailleContent) ? $tailleContent : null;
+			if (isset($menuGauche)) {
+				include($_SERVER['DOCUMENT_ROOT'] . $cheminPlugin . '/views/' . $menuGauche .'.php');
+				$tailleContent = 'three_quarter';
+			}
+			
+			$listeClasse = listeDossiers(array('dossier' => 'classe' , 'plugin' => $lienPlugin));
+			$corpsPage = $_SERVER['DOCUMENT_ROOT'] . $cheminPlugin . '/views/' . $nomPageTableauBord;
 	}
 }
 // On affiche le corps de la page

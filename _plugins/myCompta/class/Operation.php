@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/MyERP.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/MyERP.php';
 
 // On va définir notre classe
 class Operation extends MyERP
@@ -26,10 +26,15 @@ class Operation extends MyERP
 	protected $monCompte;
 	protected $maCategorie;
 	protected $monTiers;
-
-	protected $nomTable = "mycompta_operations";
-	protected $nomID = "idOperation";
 	protected $typeMontantChampNom = "type";
+
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_operations";
+		$this->nomID = "idOperation";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('date');
+		$this->ordreTriDefaut = 'ASC';
+	}
 	
 	/* On va définir notre table
 	 * $typeChamp => le type de champ dans la table,

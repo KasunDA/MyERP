@@ -1,106 +1,58 @@
 <?php
-$nomPlugin = 'myCompta';
-
-if (isset($_POST['formulaire'])){
-	require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
-	require_once $GLOBALS['root'] . '_plugins/' . $nomPlugin . '/class/' . $_POST['formulaire'] . '.php';
-	$idObjet = setDataForm($_POST['formulaire']);
-}
-
-// On affiche le menu à gauche
-include($GLOBALS['root'] . '_plugins/' . $nomPlugin . '/views/parametresMenu.php');
-
-/* On va vérifier si une demande d'action est en
- * cours et si oui, on  va afficher la page correspondante
+/* On va déclarer nos variables identiques à tous nos paramètres
  */
-if (isset($_GET['param'])) {
-	require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
-	$tentativeHack = 0;
-	switch ($_GET['param']) {
-		case 'banques':
-			$nomClasse = 'Banque';
-			$nomID = 'idBanque';
-			$URL = 'index.php?module=' . $nomPlugin . '&rubrique=parametres&param=banques';
-			$rupture = null;
+$nomPlugin = 'myCompta';
+$menuGauche = 'parametresMenu'; // Page affichant un menu personnalisable pour la classe
+
+// Variables pour l'affichage de la liste
+$champsRecherche = true;  // Affiche ou pas la possibilité de faire une recherche dans le tableau
+$afficheOption = true;  // Affiche les options dans le tableau
+
+/* Nous allons gérer les variables par paramètre afin de pouvoir personnaliser 
+ * les différentes pages et les informations à afficher 
+ */ 
+if (isset($_GET['referentiel'])){
+	switch ($_GET['referentiel']) {
+		case 'Banque':
+			// Définition des variables pour le tableau
+			$titrePage = 'Référentiel des Banque';
+			$nomClasse = 'Banque'; // Doit être identique à la rubrique sinon erreur
+			$nomPageTableauBord = null; // Page d'accueil de la classe
+			$chargeListe = false;
 			break;
-		case 'comptes':
-			$nomClasse = 'Compte';
-			$nomID = 'idCompte';
-			$URL = 'index.php?module=' . $nomPlugin . '&rubrique=parametres&param=comptes';
-			$rupture = array(
-					'cleRupture' =>	'idBanque',
-					'libelleRupture' => 'nomBanque'
-			);
+		case 'Compte':
+			// Définition des variables pour le tableau
+			$titrePage = 'Référentiel des Comptes';
+			$nomClasse = 'Compte'; // Doit être identique à la rubrique sinon erreur
+			$nomPageTableauBord = null; // Page d'accueil de la classe
+			$chargeListe = false;
 			break;
-		case 'categories':
-			$nomClasse = 'Categorie';
-			$nomID = 'idCategorie';
-			$URL = 'index.php?module=' . $nomPlugin . '&rubrique=parametres&param=categories';
-			$rupture = array(
-					'cleRupture' =>	'idFamille',
-					'libelleRupture' => 'nomFamille'
-			);
+		case 'Update':
+			// Nous allons définir ici notre page de mise à jour du plugin
+			$nomClasse = '__pluginUpdate__';
 			break;
-		case 'familles':
-			$nomClasse = 'Famille';
-			$nomID = 'idFamille';
-			$URL = 'index.php?module=' . $nomPlugin . '&rubrique=parametres&param=familles';
-			$rupture = null;
+		default: 
+			$nomClasse = null;
 			break;
-		default:
-			$tentativeHack = 1;
-			break;
-	}
-	
-	// On va afficher le contenu de notre page
-	if ($tentativeHack === 1) {
-		$corpsAffiche = '_templates/' .  $_SESSION['template'] . '/views/404.php';
-	}
-	else {
-		/* A l'aide des informations de notre switch/case, nous allons pouvoir récupérer les informations
-		 * correspondant au paramètre à afficher. 
-		 */
-		// On va définir notre classe
-		require_once $GLOBALS['root'] . '_plugins/' . $nomPlugin . '/class/' . $nomClasse . '.php';
-		$monObjet = new $nomClasse((isset($_GET['id']) ? array('idObjet' => (int)$_GET['id']) : null));
-		
-		$argsListeObjet = array(
-				'afficheObjet' => (isset($_POST['afficheObjet']) ? $_POST['afficheObjet'] : '1'),
-				'nbObjetAffiche' => (isset($_POST['nbObjetAffiche']) ? $_POST['nbObjetAffiche'] : '10'),
-				'pageAffiche' => (isset($_POST['pageAffiche']) ? $_POST['pageAffiche'] : '1'),
-				'champTri' => (isset($_POST['champTri']) ? $_POST['champTri'] : null),
-				'ordreTri' => (isset($_POST['ordreTri']) ? $_POST['ordreTri'] : null),
-				'champRecherche' => (isset($_POST['champRecherche']) ? $_POST['champRecherche'] : null),
-				'cleRecherche' => (isset($_POST['cleRecherche']) ? $_POST['cleRecherche'] : null)
-		);
-				
-		$listeObjet = $monObjet->getListeObjet($argsListeObjet);
-		// Nous allons créer un tableau d'options
-		$tableOptions = array (
-				'idObjet' => $monObjet->getValeur('nomID'),
-				'type' => array('affiche'),
-				'lien' => $URL	
-		);
-				
-				
-		$argsTableau = array(
-				'enTete' => $monObjet->getTableEnTeteDefinition(),
-				'donnees' => $listeObjet,
-				'options' => $tableOptions,
-				'rupture' => $rupture
-		);
-		
-		$corpsAffiche = $GLOBALS['root'] . '_plugins/myCompta/views/parametres' . $nomClasse . '.php';
 	}
 }
 else {
-	// Chargement de la page d'accueil
-	$corpsAffiche = $GLOBALS['root'] . '_plugins/myCompta/views/parametresTableauBord.php';
+	// Définition des variables pour le tableau
+	//$titrePage = 'Référentiel des villes';
+	$nomPageTableauBord = 'parametresTableauBord'; // Page d'accueil de la classe
+	$nomPageAffiche = null; // Page de l'affichage de l'objet
+	$nomPageFormulaire = null; // Page de saisie de l'objet
+	$nomClasse = 'Banque'; // Doit être identique à la rubrique sinon erreur
+	$chargeListe = false;
 }
 
 
-// On affiche le corps de la page
-include($corpsAffiche);
 
-
-
+if ($_SESSION[$nomPlugin] >= 1 && $nomClasse) {
+	// On fait appel à la page générique du framework qui va gérer l'affichage et l'enregistrement des objets
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/viewModels/myERP.php';
+}
+else {
+	// Pas de droit donc suspicion de tentative de hack
+	include_once $_SERVER['DOCUMENT_ROOT'] . '/_templates/' . $_SESSION['template'] . '/views/accesInterdit.php';
+}

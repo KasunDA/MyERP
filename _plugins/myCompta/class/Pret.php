@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/MyERP.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/MyERP.php';
 
 // On va définir notre classe
 class Pret extends MyERP
@@ -19,8 +19,13 @@ class Pret extends MyERP
 	protected $nbPalier;
 	protected $onArchive;
 	
-	protected $nomTable = "mycompta_prets";
-	protected $nomID = "idPret";
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_prets";
+		$this->nomID = "idPret";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('libelle');
+		$this->ordreTriDefaut = 'ASC';
+	}
 
 	/* On va définir notre table
 	 * $typeChamp => le type de champ dans la table,

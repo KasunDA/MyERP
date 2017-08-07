@@ -7,7 +7,7 @@ $dateFin = $date -> format('Y-m-t');
 // On initialise notre filtre sur l'affichage des comptes sur le compte par défaut
 $compteID = (isset ($_GET['idCompte']) ? $_GET['idCompte']: '6');
 
-require_once $GLOBALS['root'] . '_plugins/myCompta/class/Compte.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Compte.php';
 $monCompte = new Compte(array('idObjet' => $compteID ));
 
 $nomPlugin = 'myCompta';
@@ -21,9 +21,9 @@ $tailleContent = 'three_quarter';
 $specifiqueClasse = array( 'idCompte' => $compteID , 'estRapproche' => null, 'debutPeriode' => $dateDebut, 'finPeriode' => $dateFin);
 
 // On affiche le menu à gauche
-include($GLOBALS['root'] . '_plugins/' . $nomPlugin . '/views/comptesMenu.php');
+include($_SERVER['DOCUMENT_ROOT'] . '/_plugins/' . $nomPlugin . '/views/comptesMenu.php');
 
-include_once $GLOBALS['root'] . '_frameworks/myFrameWork/viewModels/rubrique.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/viewModels/rubrique.php';
 /*
 // On va vérifier si une action est en cours
 if (isset($_POST['formulaire'])){

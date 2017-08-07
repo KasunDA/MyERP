@@ -2,14 +2,12 @@
 /* On va vérifier si une requète AJAX est en cours 
 */
 if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
-	// On va définir le chemin v relatif à notre dossier root
-	$GLOBALS['root'] = '../../../';
 
 	switch ($_POST['fonction']) {
 		case 'getListeObjet':
 			// On va créer une instance de notre objet
-			require_once $GLOBALS['root'] . '_plugins/' . $_POST['plugin'] . '/class/' . $_POST['classe'] . '.php';
-			include_once ($GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php');
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/' . $_POST['plugin'] . '/class/' . $_POST['classe'] . '.php';
+			include_once ($_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/fonctions/myERP.php');
 			$monObjet = new $_POST['classe']();
 			
 			//On va ensuite définir  le type d'affichage désiré
@@ -125,9 +123,7 @@ if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
 					break;
 			}
 			break;
-		case 'operation':
-			$GLOBALS['root'] = '../../../';
-		
+		case 'operation':	
 			if ($_POST['estRapproche'] === '-1'){
 				$debutPeriode = '2016-01-01';
 				$finPeriode = '2017-12-31';
@@ -135,8 +131,7 @@ if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
 				$debutPeriode = '2017-01-15';
 				$finPeriode = '2017-03-31';
 			}
-		
-		
+
 			$args = array(
 					'idCompte' => $_POST['idCompte'],
 					'estRapproche' => $_POST['estRapproche'],
@@ -149,9 +144,8 @@ if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
 		
 			break;
 		case 'echeances':
-			$GLOBALS['root'] = '../../../';
 			// On va récupérer notre liste déchéances
-			require_once $GLOBALS['root'] . '_plugins/myCompta/class/Echeance.php';
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Echeance.php';
 			$args = array(
 					'idCompte' => ($_POST['idCompte'] === 'null' ? null : $_POST['idCompte']),
 					'dateDebut' => ($_POST['dateDebut'] === 'null'? null : $_POST['dateDebut']),
@@ -174,28 +168,26 @@ if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
 			 * formulaire de saisies des opérations/virements
 			 */
 		case 'echeanceOperation':
-			$GLOBALS['root'] = '../../../';
 			// On va récupérer notre liste déchéances
-			require_once $GLOBALS['root'] . '_plugins/myCompta/class/Echeance.php';
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Echeance.php';
 			if ((int)$_POST['idEcheance'] > 0) {
 				$maClasse = new Echeance(array('idEcheance' => (int)$_POST['idEcheance']));
 			}
 			else {
 				$maClasse = new Echeance();
 			}
-			include($GLOBALS['root'] . '_plugins/myCompta/views/mesEcheancesOperation.php');
+			include($_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/views/mesEcheancesOperation.php');
 			break;
 		case 'echeanceVirement':
-			$GLOBALS['root'] = '../../../';
 			// On va récupérer notre liste déchéances
-			require_once $GLOBALS['root'] . '_plugins/myCompta/class/Echeance.php';
+			require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Echeance.php';
 			if ((int)$_POST['idEcheance'] > 0) {
 				$maClasse = new Echeance(array('idEcheance' => (int)$_POST['idEcheance']));
 			}
 			else {
 				$maClasse = new Echeance();
 			}
-			include($GLOBALS['root'] . '_plugins/myCompta/views/mesEcheancesVirement.php');
+			include($_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/views/mesEcheancesVirement.php');
 			break;
 		default:
 			break;
@@ -212,8 +204,8 @@ if (isset($_POST['source']) AND $_POST['source'] === 'AJAX'){
  * contenant les objets banques actifs
  */
 function getListeObjetCompte() {
-	require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/MyBDD.php';
-	require_once $GLOBALS['root'] . '_plugins/myCompta/class/Compte.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/MyBDD.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Compte.php';
 	$maConnexion = new MyBDD();
 	$parametreCompte = array(
 			'nomID' => 'idCompte',
@@ -241,12 +233,12 @@ function getListeObjetCompte() {
  */
 function getListeOperationMEF($args) {
 	// On va inclure notre classe
-	require_once $GLOBALS['root'] . '_plugins/myCompta/class/Operation.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Operation.php';
 	$monOperation = new Operation();
 	// On récupère la liste de nos opérations
 	$listeOperation = $monOperation->getListeObjet($args);
 	if ($listeOperation) {
-		require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
+		require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/fonctions/myERP.php';
 		switch ($args['MEF']) {
 			case 'tableau':
 				// Nous allons recréer un tableau
@@ -317,7 +309,7 @@ function getListeOperationMEF($args) {
  * )
  */
 function funcGetListeEcheances($args) {
-	require_once $GLOBALS['root'] . '_plugins/myCompta/class/Echeance.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Echeance.php';
 	$monEcheance = new Echeance();
 	$argsEcheance = array(
 			'idCompte' => ($args['idCompte']  ? $args['idCompte'] : null)
@@ -397,14 +389,13 @@ function funcGetListeEcheances($args) {
  */
 function getListeEcheanceMEF($args) {
 	// On va inclure notre classe
-	$GLOBALS['root'] = '../../../';
-	require_once $GLOBALS['root'] . '_plugins/myCompta/class/Echeance.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Echeance.php';
 	$monEcheance = new Echeance();
 	// On récupère la liste de nos opérations
 	$listeEcheances = $monEcheance->getListeObjet();
 	$definitionEntete = $monEcheance->getDefinition();
 	if ($listeEcheances) {
-		require_once $GLOBALS['root'] . '_frameworks/myFrameWork/fonctions/myERP.php';
+		require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/fonctions/myERP.php';
 		switch ($args['MEF']) {
 			case 'tableau':
 				// Nous allons recréer un tableau

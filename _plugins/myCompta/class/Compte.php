@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_plugins/myCompta/class/Banque.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Banque.php';
 
 
 // On va définir notre classe
@@ -21,8 +21,13 @@ class Compte extends Banque
 	protected $soldeNonRapproche;
 	protected $soldeReel;
 
-	protected $nomTable = "mycompta_comptes";
-	protected $nomID = "idCompte";
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_comptes";
+		$this->nomID = "idCompte";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('libelleCompte');
+		$this->ordreTriDefaut = 'ASC';
+	}
 
 	
 	public function __construct($args = null) {

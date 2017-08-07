@@ -31,7 +31,6 @@ function myCompta($args) {
 			$rubriques[] = array( 'nom' => 'Echeance', 'page' => 'echeances');
 			$rubriques[] = array( 'nom' => 'Pret', 'page' => 'prets');
 			$rubriques[] = array( 'nom' => 'Parametres', 'page' => 'parametres');
-			
 			return $rubriques;
 			break;
 		default:

@@ -9,4 +9,4 @@ $champsRecherche = true;
 $afficheOption = true;
 
 
-include_once $GLOBALS['root'] . '_frameworks/myFrameWork/viewModels/rubrique.php';
+include_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/viewModels/rubrique.php';

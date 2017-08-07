@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_plugins/myCompta/class/Famille.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/myCompta/class/Famille.php';
 
 // On va définir notre classe
 class Categorie extends Famille
@@ -11,9 +11,13 @@ class Categorie extends Famille
 	protected $typeOperation;
 	protected $onArchive;
 
-	protected $nomTable = "mycompta_categories";
-	protected $nomID = "idCategorie";
-
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_categories";
+		$this->nomID = "idCategorie";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('nomCategorie');
+		$this->ordreTriDefaut = 'ASC';
+	}
 	public function __construct($args = null) {
 		/* On va permettre la création de notre objet
 		 * en saisissant un ID afin de l'initialiser directement

@@ -7,14 +7,14 @@ $plugin = 'myCompta';
 
 /* Partie de code à ne touchee que pour adapter le plugin */
 if (isset($_GET['module']) AND $_GET['module'] === $plugin) {
-	require_once $GLOBALS['root'] . '_plugins/' . $plugin . '/_definitions.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/_plugins/' . $plugin . '/_definitions.php';
 	$listeRubrique = $plugin('getListeRubrique');
 	if (isset($_GET['rubrique'])) {
 		//On va vérifier si une tentative de moficiation d'URL est en cours
 		$tentativeHack = true;
 		foreach ($listeRubrique as $rubrique) {
 			if ($_GET['rubrique'] === $rubrique['nom']) {
-				$corpsPage = $GLOBALS['root'] . '_plugins/' . $plugin('getNomPlugin'). '/viewModels/' . $rubrique['page'] . '.php';
+				$corpsPage = $_SERVER['DOCUMENT_ROOT'] . '/_plugins/' . $plugin('getNomPlugin'). '/viewModels/' . $rubrique['page'] . '.php';
 				
 				$tentativeHack = false;
 				break;

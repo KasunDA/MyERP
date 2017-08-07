@@ -1,5 +1,5 @@
 <?php
-require_once $GLOBALS['root'] . '_frameworks/myFrameWork/class/FonctionSQL.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/_frameworks/myFrameWork/class/FonctionSQL.php';
 
 
 // On va définir notre classe
@@ -34,9 +34,15 @@ class Echeance extends FonctionSQL
 	protected $compteSource;
 	protected $compteDestinataire;
 
-	protected $nomTable = "mycompta_echeances";
-	protected $nomID = "idEcheance";
 	protected $typeMontantChampNom = "operationType";
+
+	protected function getClasseDefinition() {
+		$this->nomTable = "mycompta_echeances";
+		$this->nomID = "idEcheance";
+		$this->suiviModification = true;
+		$this->champTriDefaut = array('dateDebut');
+		$this->ordreTriDefaut = 'ASC';
+	}
 
 	public function __construct($args = null) {
 		/* On va permettre la création de notre objet

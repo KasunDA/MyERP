@@ -10,7 +10,7 @@
 		<link href="_templates/default/css/framework.css" rel="stylesheet">
 
 		<script src="_frameworks/jquery.js"></script>
-		<script src="_frameworks/myFrameWork/fonctions/_myERP.js"></script>
+		<script src="_frameworks/myFrameWork/scripts/_myERP.js"></script>
     </head>
 	<body class='fondEcran'>
 		<div class='col-sm-12'>
